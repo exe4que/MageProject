@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +15,9 @@ public class Map : MonoBehaviour
     {
         if (size.sqrMagnitude != last.sqrMagnitude)
         {
-            Array.Resize<Cell>(ref mapGrid,size.sqrMagnitude);
+            Cell[] temp = new Cell[size.sqrMagnitude];
+            General.ArrayUtils.FillArray(ref temp, ref mapGrid);
+            mapGrid = new Cell[size.sqrMagnitude];
         }
     }
 }
