@@ -3,6 +3,6 @@
 [System.Serializable]
 public class Cell {
     public Utils.TileMaterial material=Utils.TileMaterial.GRASS;
-    [Range(0,10)]
+    [Range(0,Utils.UNITMAXHEIGHT)]
     public int height=1;
 }

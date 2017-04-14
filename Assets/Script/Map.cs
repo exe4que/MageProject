@@ -7,8 +7,10 @@ using UnityEngine;
 [System.Serializable]
 public class Map : MonoBehaviour {
     public Pair size;
+    [Range(0,5)]
+    public float unitHeight = 0.5f;
     public Cell[] mapGrid;
-
+    
     private Pair last;
 
     void OnValidate() {
