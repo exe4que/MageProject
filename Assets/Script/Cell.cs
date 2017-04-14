@@ -2,8 +2,7 @@
 
 [System.Serializable]
 public class Cell {
-    public GameManager.TileMaterial material;
-    [Range(1,10)]
+    public Utils.TileMaterial material=Utils.TileMaterial.GRASS;
+    [Range(0,Utils.UNITMAXHEIGHT)]
     public int height=1;
-
 }
