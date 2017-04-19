@@ -10,7 +10,6 @@ public class MapLoader : MonoBehaviour {
     
 
     private const float yTileSpacingRelation = 0.5f;
-    private Vector3 toIsometric = new Vector3(-0.5f,0.5f,1);
     private GameObject father;
 
     void Awake() {
@@ -23,7 +22,7 @@ public class MapLoader : MonoBehaviour {
     }
 
     private void DrawTile(int i,int j) {
-        Pair gridPos = Utils.Index1to2(i,map.size.x);
+        General.Pair gridPos = Utils.Index1to2(i,map.size.x);
         GameObject tile = new GameObject(i + " - (" + gridPos.x + ", " + gridPos.y + ")" + "(" + j + ")");
         tile.tag = "Tile";
         tile.transform.SetParent(father.transform);

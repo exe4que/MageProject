@@ -31,12 +31,12 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
             float x = (bgRectTransform.pivot.x == 1) ? pos.x * 2 + 1 : pos.x * 2 - 1;
             float y = (bgRectTransform.pivot.y == 1) ? pos.y * 2 + 1 : pos.y * 2 - 1;
 
-            inputDirection = new Vector3(x, 0, y);
+            inputDirection = new Vector3(x, y, 0);
             inputDirection = (inputDirection.magnitude > 1) ? inputDirection.normalized : inputDirection;
 
             joystickImg.rectTransform.anchoredPosition =
                 new Vector3(inputDirection.x * (bgRectTransform.sizeDelta.x / 3),
-                inputDirection.z * (bgRectTransform.sizeDelta.y / 3));
+                inputDirection.y * (bgRectTransform.sizeDelta.y / 3));
         }
     }
 
