@@ -5,9 +5,9 @@ using UnityEngine;
 public class MapLoader : MonoBehaviour {
 
     public Map map;
-    [Range(0,5)]
+    [Range(0, 5)]
     public float tileSpacing = 1f;
-    
+
 
     private const float yTileSpacingRelation = 0.5f;
     private GameObject father;
@@ -16,27 +16,18 @@ public class MapLoader : MonoBehaviour {
         father = new GameObject(map.name);
         for (int i = 0; i < map.mapGrid.Length; i++) {
             for (int j = 0; j < map.mapGrid[i].height; j++) {
-                DrawTile(i,j);
+                DrawTile(i, j, map.mapGrid[i].height == j + 1);
             }
         }
     }
 
-    private void DrawTile(int i,int j) {
-        General.Pair gridPos = Utils.Index1to2(i,map.size.x);
+    private void DrawTile(int i, int j, bool isTop) {
+        General.Pair gridPos = Utils.Index1to2(i, map.size.x);
         GameObject tile = new GameObject(i + " - (" + gridPos.x + ", " + gridPos.y + ")" + "(" + j + ")");
         tile.tag = "Tile";
         tile.transform.SetParent(father.transform);
-        tile.transform.position = Utils.ToIsometric(gridPos,tileSpacing,j,map.unitHeight);
+        tile.transform.position = Utils.ToIsometric(gridPos, tileSpacing, j, map.unitHeight);
         SpriteRenderer renderer = tile.AddComponent<SpriteRenderer>();
-        renderer.sprite = ResourcesManager.Instance.GetTile(map.mapGrid[i].material);
-    }
-
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
+        renderer.sprite = ResourcesManager.Instance.GetTile(map.mapGrid[i].material, isTop);
     }
 }
