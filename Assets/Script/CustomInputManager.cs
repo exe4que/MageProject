@@ -6,17 +6,23 @@ using UnityEngine.UI;
 public class CustomInputManager : MonoBehaviour {
 
     public bool isVirtual = false;
-    public static bool _isVirtual=false;
+    public static bool _isVirtual = false;
+    public VirtualJoystick _virtualJoystick;
     public static VirtualJoystick virtualJoystick;
     private static Vector3 inputDirection { get; set; }
-    private static Button aButton, bButton, xButton, yButton, selectButton, startButton;
-    private ScrollRect aSwipe, bSwipe, xSwipe, ySwipe;
+    public ButtonBehaviour[] _virtualButtons;
+    private static ButtonBehaviour[] buttons;
+    //private ScrollRect aSwipe, bSwipe, xSwipe, ySwipe;
 
     void Awake() {
         _isVirtual = isVirtual;
-        virtualJoystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<VirtualJoystick>();
-        aButton = GameObject.FindGameObjectWithTag("AButton").GetComponent<Button>();
-        aSwipe = GameObject.FindGameObjectWithTag("AButton").GetComponent<ScrollRect>();
+        //virtualJoystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<VirtualJoystick>();
+        //aButton = GameObject.FindGameObjectWithTag("AButton").GetComponent<Button>();
+        //aSwipe = GameObject.FindGameObjectWithTag("AButton").GetComponent<ScrollRect>();
+        virtualJoystick = _virtualJoystick;
+        buttons = _virtualButtons;
+        if(virtualJoystick==null) Debug.Log("Virtual joystick not assigned in input manager");
+        NullCheck();
     }
 
     public static Vector3 GetDirection() {
@@ -30,18 +36,41 @@ public class CustomInputManager : MonoBehaviour {
         return inputDirection;
     }
     public static bool GetButtonUp(string _buttonName) {
-        if (_isVirtual) return aButton.;
-        else return Input.GetButtonUp(_buttonName);
+        if (_isVirtual) {
+            ButtonBehaviour btn = ButtonByName(_buttonName);
+            if (btn == null) return false;
+            else return btn.GetButtonUp();
+        } else return Input.GetButtonUp(_buttonName);
     }
 
     public static bool GetButtonDown(string _buttonName) {
-        if (_isVirtual) return false;
-        else return Input.GetButtonDown(_buttonName);
+        if (_isVirtual) {
+            ButtonBehaviour btn = ButtonByName(_buttonName);
+            if (btn == null) return false;
+            else return btn.GetButtonDown();
+        } else return Input.GetButtonDown(_buttonName);
     }
 
     public static bool GetButton(string _buttonName) {
-        if (_isVirtual) return false;
-        else return Input.GetButton(_buttonName);
+        if (_isVirtual) {
+            ButtonBehaviour btn = ButtonByName(_buttonName);
+            if (btn == null) return false;
+            else return btn.GetButton();
+        } else return Input.GetButton(_buttonName);
     }
 
+    private static ButtonBehaviour ButtonByName(string _name) {
+        foreach (ButtonBehaviour btn in buttons) {
+            if (btn != null && btn.name.Equals(_name)) {
+                return btn;
+            }
+        }
+        return null;
+    }
+
+    private void NullCheck() {
+        foreach (ButtonBehaviour btn in buttons) {
+            if (btn == null) Debug.Log("Virtual button not assigned in input manager");
+        }
+    }
 }
