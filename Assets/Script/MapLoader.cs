@@ -26,7 +26,9 @@ public class MapLoader : MonoBehaviour {
         GameObject tile = new GameObject(i + " - (" + gridPos.x + ", " + gridPos.y + ")" + "(" + j + ")");
         tile.tag = "Tile";
         tile.transform.SetParent(father.transform);
-        tile.transform.position = Utils.ToIsometric(gridPos, tileSpacing, j, map.unitHeight);
+        tile.transform.position = Utils.ToWorldPos(gridPos, tileSpacing, j, map.unitHeight);
+        tile.transform.localRotation = Utils.WORLDDEFAULTROTATION;
+        tile.transform.localScale = Utils.WORLDDEFAULTSCALE;
         SpriteRenderer renderer = tile.AddComponent<SpriteRenderer>();
         renderer.sprite = ResourcesManager.Instance.GetTile(map.mapGrid[i].material, isTop);
     }
