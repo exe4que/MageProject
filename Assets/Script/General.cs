@@ -22,8 +22,10 @@ namespace General {
 }
 public static class Utils {
     public const int UNITMAXHEIGHT = 10;
-    public static Quaternion ISODEFAULTROTATION = Quaternion.identity, WORLDDEFAULTROTATION = Quaternion.Euler(0, 315, 0);
-    public static Vector3 ISODEFAULTSCALE = Vector3.one, WORLDDEFAULTSCALE = new Vector3(0.7f, 0.7f , 0.7f);
+    //public static Quaternion ISODEFAULTROTATION = Quaternion.identity, WORLDDEFAULTROTATION = Quaternion.Euler(0, 315, 0);
+    public static Quaternion ISODEFAULTROTATION = Quaternion.identity, WORLDDEFAULTROTATION = Quaternion.Euler(90, 0, 45);
+    //public static Vector3 ISODEFAULTSCALE = Vector3.one, WORLDDEFAULTSCALE = new Vector3(0.7f, 0.7f , 0.7f);
+    public static Vector3 ISODEFAULTSCALE = Vector3.one, WORLDDEFAULTSCALE = new Vector3(0.7072f, 1.4143f, 1f);
     public enum TileMaterial { WATER, GRASS, ROCK, BLANK, EMPTY };
 
     public static General.Pair Index1to2(int _value, int _arrayWidth) {

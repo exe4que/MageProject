@@ -81,12 +81,13 @@
     <Compile Include="Assets\Script\ButtonBehaviour.cs" />
     <Compile Include="Assets\Script\Cell.cs" />
     <Compile Include="Assets\Script\CustomInputManager.cs" />
+    <Compile Include="Assets\Script\ExtensionMethods.cs" />
     <Compile Include="Assets\Script\GameManager.cs" />
     <Compile Include="Assets\Script\General.cs" />
     <Compile Include="Assets\Script\Map.cs" />
     <Compile Include="Assets\Script\MapLoader.cs" />
     <Compile Include="Assets\Script\ResourcesManager.cs" />
-    <Compile Include="Assets\Script\TestMovement.cs" />
+    <Compile Include="Assets\Script\Testing\TestMovement.cs" />
     <Compile Include="Assets\Script\VirtualJoystick.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
