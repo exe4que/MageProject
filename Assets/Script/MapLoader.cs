@@ -22,14 +22,26 @@ public class MapLoader : MonoBehaviour {
     }
 
     private void DrawTile(int i, int j, bool isTop) {
+        Sprite sprite = ResourcesManager.Instance.GetTile(map.mapGrid[i].material, isTop);
+        if (sprite==null) {
+            return;
+        }
         General.Pair gridPos = Utils.Index1to2(i, map.size.x);
         GameObject tile = new GameObject(i + " - (" + gridPos.x + ", " + gridPos.y + ")" + "(" + j + ")");
         tile.tag = "Tile";
         tile.transform.SetParent(father.transform);
         tile.transform.position = Utils.ToWorldPos(gridPos, tileSpacing, j, map.unitHeight);
-        tile.transform.localRotation = Utils.WORLDDEFAULTROTATION;
-        tile.transform.localScale = Utils.WORLDDEFAULTSCALE;
-        SpriteRenderer renderer = tile.AddComponent<SpriteRenderer>();
-        renderer.sprite = ResourcesManager.Instance.GetTile(map.mapGrid[i].material, isTop);
+        BoxCollider collider = tile.AddComponent<BoxCollider>();
+        collider.size = new Vector3(1,map.unitHeight,1);
+        collider.center = Vector3.one * 0.5f;
+
+        GameObject tileChild = new GameObject("SpriteContainer");
+        tileChild.transform.position = tile.transform.position;
+        tileChild.transform.SetParent(tile.transform);
+        tileChild.transform.localRotation = Utils.WORLDDEFAULTROTATION;
+        tileChild.transform.localScale = Utils.WORLDDEFAULTSCALE;
+        SpriteRenderer renderer = tileChild.AddComponent<SpriteRenderer>();
+        renderer.sprite = sprite;
+       
     }
 }

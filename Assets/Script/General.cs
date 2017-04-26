@@ -23,7 +23,7 @@ namespace General {
 public static class Utils {
     public const int UNITMAXHEIGHT = 10;
     public static Quaternion ISODEFAULTROTATION = Quaternion.identity, WORLDDEFAULTROTATION = Quaternion.Euler(0, 315, 0);
-    public static Vector3 ISODEFAULTSCALE = Vector3.one, WORLDDEFAULTSCALE = new Vector3(0.7f, 1.15f , 1);
+    public static Vector3 ISODEFAULTSCALE = Vector3.one, WORLDDEFAULTSCALE = new Vector3(0.7f, 0.7f , 0.7f);
     public enum TileMaterial { WATER, GRASS, ROCK, BLANK, EMPTY };
 
     public static General.Pair Index1to2(int _value, int _arrayWidth) {
