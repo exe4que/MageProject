@@ -14,6 +14,7 @@ public class MapLoader : MonoBehaviour {
 
     void Awake() {
         father = new GameObject(map.name);
+        father.isStatic = true;
         for (int i = 0; i < map.mapGrid.Length; i++) {
             for (int j = 0; j < map.mapGrid[i].height; j++) {
                 DrawTile(i, j, map.mapGrid[i].height == j + 1);
@@ -29,6 +30,7 @@ public class MapLoader : MonoBehaviour {
         General.Pair gridPos = Utils.Index1to2(i, map.size.x);
         GameObject tile = new GameObject(i + " - (" + gridPos.x + ", " + gridPos.y + ")" + "(" + j + ")");
         tile.tag = "Tile";
+        tile.isStatic = true;
         tile.transform.SetParent(father.transform);
         tile.transform.position = Utils.ToWorldPos(gridPos, tileSpacing, j, map.unitHeight);
         BoxCollider collider = tile.AddComponent<BoxCollider>();
@@ -36,6 +38,7 @@ public class MapLoader : MonoBehaviour {
         collider.center = new Vector3(0.5f, -(map.unitHeight/2f), 0.5f);
 
         GameObject tileChild = new GameObject("SpriteContainer");
+        tileChild.isStatic = true;
         tileChild.transform.position = tile.transform.position;
         tileChild.transform.SetParent(tile.transform);
         tileChild.transform.localRotation = Utils.WORLDDEFAULTROTATION;

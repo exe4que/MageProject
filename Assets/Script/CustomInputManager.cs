@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,7 +22,7 @@ public class CustomInputManager : MonoBehaviour {
         //aSwipe = GameObject.FindGameObjectWithTag("AButton").GetComponent<ScrollRect>();
         virtualJoystick = _virtualJoystick;
         buttons = _virtualButtons;
-        if(virtualJoystick==null) Debug.Log("Virtual joystick not assigned in input manager");
+        if (virtualJoystick == null) Debug.Log("Virtual joystick not assigned in input manager");
         NullCheck();
     }
 
@@ -66,6 +67,17 @@ public class CustomInputManager : MonoBehaviour {
             }
         }
         return null;
+    }
+
+    public static float GetAngleDirection() {
+        //-99f is the default state (it doesn't define a direction)
+        Vector3 to = GetDirection();
+        if (to == Vector3.zero) return -99f;
+        Vector3 from = Vector3.left;
+        float angleDirection = Vector3.Angle(from, to);
+        Vector3 cross = Vector3.Cross(from, to);
+        if (cross.z > 0) angleDirection = 360f - angleDirection;
+        return angleDirection;
     }
 
     private void NullCheck() {

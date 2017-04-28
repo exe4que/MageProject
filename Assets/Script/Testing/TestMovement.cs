@@ -7,13 +7,14 @@ public class TestMovement : MonoBehaviour {
     public float velocity = 4f;
     new SpriteRenderer renderer;
     CharacterController controller;
+    Vector3 direction;
 
     void Awake() {
         renderer = this.GetComponentInChildren<SpriteRenderer>();
         controller = this.GetComponent<CharacterController>();
     }
 	void FixedUpdate () {
-        Vector3 direction = CustomInputManager.GetDirection().XYtoXZ();
+        direction = CustomInputManager.GetDirection().XYtoXZ();
         direction = Quaternion.Euler(0, -45, 0) * direction;
         
         this.transform.LookAt(transform.position + direction);
@@ -22,6 +23,7 @@ public class TestMovement : MonoBehaviour {
     }
 
     private void Update() {
+        Debug.Log(Utils.AngleToIsometricDirection(CustomInputManager.GetAngleDirection()));
         if (CustomInputManager.GetButtonUp("AButton")) {
             this.renderer.material.color = Color.green;
             this.renderer.color = Color.green;

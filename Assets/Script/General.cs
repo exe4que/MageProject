@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,18 +16,46 @@ namespace General {
             get { return x * y; }
         }
     }
-
-    public class Button {
-        public bool up, down, pressed;
-    }
 }
 public static class Utils {
     public const int UNITMAXHEIGHT = 10;
-    //public static Quaternion ISODEFAULTROTATION = Quaternion.identity, WORLDDEFAULTROTATION = Quaternion.Euler(0, 315, 0);
     public static Quaternion ISODEFAULTROTATION = Quaternion.identity, WORLDDEFAULTROTATION = Quaternion.Euler(90, 0, 45);
-    //public static Vector3 ISODEFAULTSCALE = Vector3.one, WORLDDEFAULTSCALE = new Vector3(0.7f, 0.7f , 0.7f);
     public static Vector3 ISODEFAULTSCALE = Vector3.one, WORLDDEFAULTSCALE = new Vector3(0.7072f, 1.4143f, 1f);
     public enum TileMaterial { WATER, GRASS, ROCK, BLANK, EMPTY };
+    public enum IsometricDirections {
+        UP,
+        UPRIGHT,
+        RIGHT,
+        DOWNRIGHT,
+        DOWN,
+        DOWNLEFT,
+        LEFT,
+        UPLEFT,
+        NONE
+    };
+
+    public static Vector2 IsometricDirectionToPortion(Utils.IsometricDirections _direction) {
+        if (_direction == Utils.IsometricDirections.UP) return new Vector2(67.5f, 112.5f);
+        if (_direction == Utils.IsometricDirections.UPRIGHT) return new Vector2(112.5f, 157.5f);
+        if (_direction == Utils.IsometricDirections.RIGHT) return new Vector2(157.5f, 202.5f);
+        if (_direction == Utils.IsometricDirections.DOWNRIGHT) return new Vector2(202.5f, 247.5f);
+        if (_direction == Utils.IsometricDirections.DOWN) return new Vector2(247.5f, 292.5f);
+        if (_direction == Utils.IsometricDirections.DOWNLEFT) return new Vector2(292.5f, 337.5f);
+        if (_direction == Utils.IsometricDirections.LEFT) return new Vector2(-22.5f, 22.5f);
+        if (_direction == Utils.IsometricDirections.UPLEFT) return new Vector2(22.5f, 67.5f);
+        return Vector2.zero;
+    }
+
+    public static Utils.IsometricDirections AngleToIsometricDirection(float _angle) {
+        _angle = _angle >= 337.5f ? _angle - 360f : _angle;
+        foreach (Utils.IsometricDirections dir in Enum.GetValues(typeof(Utils.IsometricDirections))) {
+            Vector2 portion = IsometricDirectionToPortion(dir);
+            if (_angle >= portion.x && _angle < portion.y) return dir;
+        }
+        return Utils.IsometricDirections.NONE;
+    }
+
+
 
     public static General.Pair Index1to2(int _value, int _arrayWidth) {
         int y = (int) (_value / _arrayWidth);
