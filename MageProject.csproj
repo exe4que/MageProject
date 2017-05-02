@@ -86,9 +86,19 @@
     <Compile Include="Assets\Script\General.cs" />
     <Compile Include="Assets\Script\Map.cs" />
     <Compile Include="Assets\Script\MapLoader.cs" />
+    <Compile Include="Assets\Script\PlayerMovement.cs" />
     <Compile Include="Assets\Script\ResourcesManager.cs" />
     <Compile Include="Assets\Script\Testing\TestMovement.cs" />
+    <Compile Include="Assets\Script\Testing\TestMovement_rotOnly.cs" />
     <Compile Include="Assets\Script\VirtualJoystick.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shaders\Unlit_color_cutout.shader" />
+    <None Include="Assets\Shaders\Unlit_texture_color.shader" />
+    <None Include="Assets\Shaders\Unlit_texture_color_lightmap.shader" />
+    <None Include="Assets\Shaders\unlit_cutout_lightmapped.shader" />
+    <None Include="Assets\Shaders\unlit_trans_color.shader" />
+    <None Include="Assets\Shaders\unlit_trans_color_Zoff.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

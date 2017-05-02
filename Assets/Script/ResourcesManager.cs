@@ -29,6 +29,7 @@ public class ResourcesManager : MonoBehaviour {
     #endregion
     public bool update;
     public TileMaterialMapping[] tileMaterials;
+    public Dictionary<TileMaterialMapping, Utils.TileMaterial> tileMaterials2;
 
     public Sprite GetTile(Utils.TileMaterial _tileEnum) {
         foreach (TileMaterialMapping mapping in tileMaterials) {
