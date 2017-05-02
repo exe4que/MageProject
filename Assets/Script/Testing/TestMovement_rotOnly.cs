@@ -2,24 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestMovement : MonoBehaviour {
-
-    public float velocity = 4f;
-    new SpriteRenderer renderer;
-    CharacterController controller;
+public class TestMovement_rotOnly : MonoBehaviour {
     Vector3 direction;
+    new SpriteRenderer renderer;
 
     void Awake() {
         renderer = this.GetComponentInChildren<SpriteRenderer>();
-        controller = this.GetComponent<CharacterController>();
     }
-	void FixedUpdate () {
+
+    void FixedUpdate () {
         direction = CustomInputManager.GetDirection().XYtoXZ();
         direction = Quaternion.Euler(0, -45, 0) * direction;
-        
         this.transform.LookAt(transform.position + direction);
-        controller.SimpleMove(direction * velocity * Time.deltaTime);
-        
     }
 
     private void Update() {
