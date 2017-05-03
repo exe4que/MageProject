@@ -22,17 +22,7 @@ public static class Utils {
     public static Quaternion ISODEFAULTROTATION = Quaternion.identity, WORLDDEFAULTROTATION = Quaternion.Euler(90, 0, 45);
     public static Vector3 ISODEFAULTSCALE = Vector3.one, WORLDDEFAULTSCALE = new Vector3(0.7072f, 1.4143f, 1f);
     public enum TileMaterial { WATER, GRASS, ROCK, BLANK, EMPTY };
-    public enum IsometricDirections {
-        UP,
-        UPRIGHT,
-        RIGHT,
-        DOWNRIGHT,
-        DOWN,
-        DOWNLEFT,
-        LEFT,
-        UPLEFT,
-        NONE
-    };
+    public enum IsometricDirections { UP, UPRIGHT, RIGHT, DOWNRIGHT, DOWN, DOWNLEFT, LEFT, UPLEFT, NONE };
 
     public static Vector2 IsometricDirectionToPortion(Utils.IsometricDirections _direction) {
         if (_direction == Utils.IsometricDirections.UP) return new Vector2(67.5f, 112.5f);

@@ -20,7 +20,13 @@ public class PlayerMovement : MonoBehaviour {
     void Update() {
         Utils.IsometricDirections current = Utils.AngleToIsometricDirection(CustomInputManager.GetAngleDirection());
         if (current != lastDirection) {
-            animator.SetTrigger(current.ToString());
+            if(current== Utils.IsometricDirections.NONE) {
+                animator.SetTrigger(lastDirection.ToString());
+                animator.SetTrigger("STANDING");
+            } else {
+                animator.SetTrigger(current.ToString());
+                animator.SetTrigger("WALKING");
+            }
             lastDirection = current;
         }
     }

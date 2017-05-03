@@ -28,44 +28,54 @@ public class ResourcesManager : MonoBehaviour {
     }
     #endregion
     public bool update;
-    public TileMaterialMapping[] tileMaterials;
-    public Dictionary<TileMaterialMapping, Utils.TileMaterial> tileMaterials2;
+    public TileMaterialMapping[] _tileMaterials;
+    public Dictionary<Utils.TileMaterial, TileMaterialMapping> tileMaterials;
 
-    public Sprite GetTile(Utils.TileMaterial _tileEnum) {
-        foreach (TileMaterialMapping mapping in tileMaterials) {
-            if (mapping.id == _tileEnum) {
-                return mapping.sprite;
-            }
+    //public DirectionalSpriteMapping[] _characterSprites;
+    //public Dictionary<Utils.IsometricDirections, DirectionalSpriteMapping> characterSprites;
+
+
+
+    void Awake() {
+        tileMaterials = new Dictionary<Utils.TileMaterial, TileMaterialMapping>();
+        for (int i = 0; i < _tileMaterials.Length; i++) {
+            tileMaterials.Add(_tileMaterials[i].id, _tileMaterials[i]);
         }
-        return null;
+        //characterSprites = new Dictionary<Utils.IsometricDirections, DirectionalSpriteMapping>();
+        //for (int i = 0; i < _characterSprites.Length; i++) {
+        //    characterSprites.Add(_characterSprites[i].id, _characterSprites[i]);
+        //}
     }
 
+    public Sprite GetTile(Utils.TileMaterial _tileEnum) {
+        return tileMaterials[_tileEnum].sprite;
+    }
     public Sprite GetTile(Utils.TileMaterial _tileEnum, bool _isTop) {
-        foreach (TileMaterialMapping mapping in tileMaterials) {
-            if (mapping.id == _tileEnum) {
-                if (_isTop) {
-                    if (mapping.spriteTop!=null) {
-                        return mapping.spriteTop;
-                    } else {
-                        return mapping.sprite;
-                    }
-                } else {
-                    return mapping.sprite;
-                }
-            }
-        }
-        return null;
+        return _isTop ? tileMaterials[_tileEnum].spriteTop : tileMaterials[_tileEnum].sprite;
     }
 
     private void OnValidate() {
         if (update) {
-            Array enums = Enum.GetValues(typeof(Utils.TileMaterial));
-            Array.Resize<TileMaterialMapping>(ref tileMaterials, enums.Length);
-            for (int i = 0; i < enums.Length; i++) {
-                if (tileMaterials[i] == null) tileMaterials[i] = new TileMaterialMapping();
-                tileMaterials[i].id = (Utils.TileMaterial) i;
-            }
+            ResizeTileMaterialMapping();
             update = false;
+        }
+    }
+
+    private void ResizeTileMaterialMapping() {
+        Array enums = Enum.GetValues(typeof(Utils.TileMaterial));
+        Array.Resize<TileMaterialMapping>(ref _tileMaterials, enums.Length);
+        for (int i = 0; i < _tileMaterials.Length; i++) {
+            if (_tileMaterials[i] == null) _tileMaterials[i] = new TileMaterialMapping();
+            _tileMaterials[i].id = (Utils.TileMaterial) i;
+        }
+    }
+
+    private void ResizeDirectionalSpriteMapping(ref DirectionalSpriteMapping[] _mappingSet) {
+        Array enums = Enum.GetValues(typeof(Utils.IsometricDirections));
+        Array.Resize<DirectionalSpriteMapping>(ref _mappingSet, enums.Length);
+        for (int i = 0; i < _mappingSet.Length; i++) {
+            if (_mappingSet[i] == null) _mappingSet[i] = new DirectionalSpriteMapping();
+            _mappingSet[i].id = (Utils.IsometricDirections) i;
         }
     }
 }
@@ -80,10 +90,15 @@ public class TileMaterialMapping {
         this.id = Utils.TileMaterial.BLANK;
         this.sprite = null;
     }
+}
 
-    public TileMaterialMapping(Utils.TileMaterial _id, Sprite _sprite, Sprite _top) {
-        this.id = _id;
-        this.sprite = _sprite;
-        this.spriteTop = _top;
+[System.Serializable]
+public class DirectionalSpriteMapping {
+    public Utils.IsometricDirections id;
+    public Sprite sprite;
+
+    public DirectionalSpriteMapping() {
+        this.id = Utils.IsometricDirections.NONE;
+        this.sprite = null;
     }
 }
