@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     public float velocity = 80f;
-    new SpriteRenderer renderer;
     Animator animator;
     CharacterController controller;
     Vector3 direction;
@@ -13,19 +12,22 @@ public class PlayerMovement : MonoBehaviour {
     Utils.IsometricDirections lastDirection = Utils.IsometricDirections.NONE;
 
     void Awake() {
-        renderer = this.GetComponentInChildren<SpriteRenderer>();
         controller = this.GetComponent<CharacterController>();
         animator = this.GetComponent<Animator>();
     }
     void Update() {
         Utils.IsometricDirections current = Utils.AngleToIsometricDirection(CustomInputManager.GetAngleDirection());
         if (current != lastDirection) {
-            if(current== Utils.IsometricDirections.NONE) {
-                animator.SetTrigger(lastDirection.ToString());
-                animator.SetTrigger("STANDING");
+            if (current== Utils.IsometricDirections.NONE) {
+                //animator.SetTrigger(lastDirection.ToString());
+                //animator.SetTrigger("STANDING");
+                animator.Play("STANDING-" + lastDirection.ToString(),0);
             } else {
-                animator.SetTrigger(current.ToString());
-                animator.SetTrigger("WALKING");
+                AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+                animator.Play("WALKING-" + current.ToString(), 0, info.normalizedTime);
+                //animator.SetFloat("CycleOffset", info.normalizedTime - (int) info.normalizedTime);
+                //animator.SetTrigger(current.ToString());
+                //animator.SetTrigger("WALKING");
             }
             lastDirection = current;
         }
