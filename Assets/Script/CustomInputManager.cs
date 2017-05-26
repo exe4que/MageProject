@@ -22,7 +22,6 @@ public class CustomInputManager : MonoBehaviour {
         //aSwipe = GameObject.FindGameObjectWithTag("AButton").GetComponent<ScrollRect>();
         virtualJoystick = _virtualJoystick;
         buttons = _virtualButtons;
-        if (virtualJoystick == null) Debug.Log("Virtual joystick not assigned in input manager");
         NullCheck();
     }
 
@@ -81,6 +80,7 @@ public class CustomInputManager : MonoBehaviour {
     }
 
     private void NullCheck() {
+        if (virtualJoystick == null) Debug.Log("Virtual joystick not assigned in input manager");
         foreach (ButtonBehaviour btn in buttons) {
             if (btn == null) Debug.Log("Virtual button not assigned in input manager");
         }
